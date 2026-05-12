@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nosotros — EVOR</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .about-hero { background: var(--bg-2); border-bottom: 1px solid var(--line); }
+    .team-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 24px; }
+    .team-card { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--ghost); transition: all .4s var(--ease); }
+    .team-card:hover { border-color: var(--line-2); transform: translateY(-6px); }
+    .team-card-img { aspect-ratio: 1; background: linear-gradient(135deg, #111, #222); display: flex; align-items: center; justify-content: center; }
+    .team-card-img svg { width: 56px; height: 56px; stroke: var(--line-2); }
+    .team-card-info { padding: 24px; }
+    .team-card-info h4 { font-family: var(--display); font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+    .team-card-info span { font-size: 13px; color: var(--muted); }
+    .values-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 20px; }
+    .value-item { padding: 36px 28px; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--ghost); transition: all .4s var(--ease); }
+    .value-item:hover { border-color: var(--line-2); transform: translateY(-4px); }
+    .value-num { font-family: var(--display); font-size: 48px; font-weight: 800; color: rgba(255,255,255,.06); line-height: 1; margin-bottom: 16px; }
+    .value-item h4 { font-family: var(--display); font-size: 20px; font-weight: 600; margin-bottom: 10px; }
+    .value-item p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .tl-item { display: grid; grid-template-columns: 100px 1fr; gap: 32px; padding: 40px 0; border-top: 1px solid var(--line); }
+    .tl-year { font-family: var(--display); font-size: 22px; font-weight: 700; color: var(--faint); padding-top: 4px; }
+    .tl-item h4 { font-family: var(--display); font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+    .tl-item p { font-size: 15px; color: var(--muted); line-height: 1.65; }
+    @media(max-width:600px){ .tl-item{grid-template-columns:1fr;gap:8px} .tl-year{font-size:14px} }
+  </style>
+</head>
+<body>
+<div id="loader"><div class="loader-logo"><span>E</span><span>V</span><span>O</span><span>R</span></div></div>
+<div id="page-overlay"></div>
+<div class="cursor"></div><div class="cursor-ring"></div>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo">EVOR</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="about.html">Nosotros</a></li>
+    <li><a href="services.html">Servicios</a></li>
+    <li><a href="product.html">Producto</a></li>
+    <li><a href="testimonials.html">Testimonios</a></li>
+    <li><a href="contact.html">Contacto</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Comenzar <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+  <button class="nav-burger"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-mobile">
+  <a href="index.html">Inicio</a><a href="about.html">Nosotros</a><a href="services.html">Servicios</a>
+  <a href="product.html">Producto</a><a href="testimonials.html">Testimonios</a><a href="contact.html">Contacto</a>
+</div>
+
+<!-- HERO -->
+<section class="about-hero hero">
+  <div class="grid-bg grid-bg-fade"></div>
+  <div class="hero-content">
+    <span class="eyebrow" style="animation:fadeUp .8s var(--ease) .2s both;opacity:0;">Nosotros</span>
+    <h1 class="display-xl grad-text" style="animation:fadeUp 1s var(--ease) .35s both;opacity:0;max-width:900px;">Movidos por un propósito.</h1>
+    <p class="lead" style="animation:fadeUp 1s var(--ease) .5s both;opacity:0;margin-top:28px;">Somos un equipo de ingenieros, estrategas y consultores tecnológicos con una sola misión: empoderar a las empresas con tecnología que realmente funciona.</p>
+  </div>
+</section>
+
+<!-- MISSION / VISION -->
+<div class="section">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;" class="reveal">
+    <div>
+      <span class="eyebrow">Misión</span>
+      <h2 class="display-sm" style="margin-bottom:20px;">Democratizar la tecnología empresarial de élite.</h2>
+      <p class="lead">Creemos que cada empresa, sin importar su tamaño, merece acceso a la infraestructura tecnológica que hasta ahora solo tenían las grandes corporaciones. Hacemos eso posible.</p>
+    </div>
+    <div>
+      <span class="eyebrow">Visión</span>
+      <h2 class="display-sm" style="margin-bottom:20px;">Ser el socio tecnológico de referencia en Latinoamérica.</h2>
+      <p class="lead">Para 2030, aspiramos a ser la plataforma tecnológica detrás de las empresas más innovadoras y resilientes de la región, construyendo infraestructura que dure décadas.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="rule">
+
+<!-- VALUES -->
+<div class="section">
+  <span class="eyebrow reveal">Nuestros valores</span>
+  <h2 class="display reveal d1" style="margin-bottom:56px;">Lo que nos define.</h2>
+  <div class="values-grid">
+    <div class="value-item reveal d1">
+      <div class="value-num">01</div>
+      <h4>Excelencia técnica</h4>
+      <p>No hacemos compromisos cuando se trata de calidad. Cada solución que entregamos pasa por estándares de ingeniería de clase mundial.</p>
+    </div>
+    <div class="value-item reveal d2">
+      <div class="value-num">02</div>
+      <h4>Transparencia total</h4>
+      <p>Sin letra pequeña, sin sorpresas. Comunicamos con claridad cada decisión, cada costo y cada resultado a nuestros clientes.</p>
+    </div>
+    <div class="value-item reveal d3">
+      <div class="value-num">03</div>
+      <h4>Obsesión por el cliente</h4>
+      <p>Tu éxito es nuestro éxito. Medimos nuestro rendimiento por el impacto real que generamos en tu negocio, no por métricas vacías.</p>
+    </div>
+    <div class="value-item reveal d4">
+      <div class="value-num">04</div>
+      <h4>Innovación continua</h4>
+      <p>El mundo tecnológico no se detiene y nosotros tampoco. Invertimos constantemente en aprendizaje y adaptación para traerte lo más avanzado.</p>
+    </div>
+    <div class="value-item reveal d5">
+      <div class="value-num">05</div>
+      <h4>Seguridad primero</h4>
+      <p>La seguridad no es una característica adicional, es la base de todo lo que construimos. Cada decisión técnica parte de este principio.</p>
+    </div>
+    <div class="value-item reveal d6">
+      <div class="value-num">06</div>
+      <h4>Impacto medible</h4>
+      <p>Definimos KPIs claros desde el día uno y los revisamos contigo regularmente. Si no hay resultados, encontramos el porqué y lo corregimos.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="rule">
+
+<!-- TIMELINE -->
+<div class="section">
+  <span class="eyebrow reveal">Historia</span>
+  <h2 class="display reveal d1" style="margin-bottom:60px;">Nuestra trayectoria.</h2>
+  <div class="timeline">
+    <div class="tl-item reveal d1">
+      <div class="tl-year">2017</div>
+      <div><h4>Fundación de EVOR</h4><p>Tres ingenieros con una visión clara fundan EVOR en Monterrey, NL, con el objetivo de ofrecer consultoría tecnológica premium a empresas medianas del noreste de México.</p></div>
+    </div>
+    <div class="tl-item reveal d2">
+      <div class="tl-year">2019</div>
+      <div><h4>Lanzamiento del módulo de seguridad</h4><p>Desarrollamos nuestra primera solución propietaria de seguridad de red, integrando firewall, VPN y monitoreo en un solo producto administrado.</p></div>
+    </div>
+    <div class="tl-item reveal d3">
+      <div class="tl-year">2021</div>
+      <div><h4>Partnership con Microsoft</h4><p>EVOR se convierte en Microsoft Solutions Partner, lo que nos permite ofrecer licenciamiento oficial, soporte prioritario y acceso anticipado a nuevas funcionalidades.</p></div>
+    </div>
+    <div class="tl-item reveal d4">
+      <div class="tl-year">2023</div>
+      <div><h4>Expansión y automatización</h4><p>Añadimos la división de automatización de procesos en alianza con expertos certificados en Power Automate, atendiendo ya a más de 80 empresas en 6 estados.</p></div>
+    </div>
+    <div class="tl-item reveal d5">
+      <div class="tl-year">2026</div>
+      <div><h4>Lanzamiento de plataforma integrada</h4><p>Presentamos nuestra plataforma unificada de gestión: un solo panel para controlar seguridad, productividad, correo y automatización de toda tu empresa.</p></div>
+    </div>
+  </div>
+</div>
+
+<hr class="rule">
+
+<!-- TEAM -->
+<div class="section">
+  <span class="eyebrow reveal">Equipo</span>
+  <h2 class="display reveal d1" style="margin-bottom:56px;">Las personas detrás de EVOR.</h2>
+  <div class="team-grid">
+    <div class="team-card reveal d1">
+      <div class="team-card-img">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      </div>
+      <div class="team-card-info"><h4>Carlos Mendoza</h4><span>CEO &amp; Co-fundador</span></div>
+    </div>
+    <div class="team-card reveal d2">
+      <div class="team-card-img">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      </div>
+      <div class="team-card-info"><h4>Ana Reyes</h4><span>CTO &amp; Co-fundadora</span></div>
+    </div>
+    <div class="team-card reveal d3">
+      <div class="team-card-img">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      </div>
+      <div class="team-card-info"><h4>Diego Torres</h4><span>Director de Seguridad</span></div>
+    </div>
+    <div class="team-card reveal d4">
+      <div class="team-card-img">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      </div>
+      <div class="team-card-info"><h4>Laura Garza</h4><span>Directora de Clientes</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-banner" style="background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:clamp(80px,10vw,140px) clamp(20px,5vw,80px);text-align:center;position:relative;overflow:hidden;">
+  <div class="grid-bg grid-bg-fade"></div>
+  <div style="position:relative;z-index:1;">
+    <h2 class="display reveal" style="margin-bottom:20px;">¿Somos tu equipo?</h2>
+    <p class="lead reveal d1" style="margin:0 auto 40px;">Contáctanos y agendamos una sesión de diagnóstico sin costo para entender tus necesidades.</p>
+    <div class="reveal d2"><a href="contact.html" class="btn btn-primary">Hablar con nosotros <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand"><div class="footer-logo-text">EVOR</div><p>Tecnología que impulsa tu empresa.</p><div class="footer-social">
+          <a href="https://www.facebook.com/evor" target="_blank" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/evor.mx" target="_blank" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/company/evor" target="_blank" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="https://wa.me/528112345678" target="_blank" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </a>
+        </div></div>
+      <div class="footer-col"><h5>Servicios</h5><a href="services/m365.html">Microsoft 365</a><a href="services/email.html">Correo empresarial</a><a href="services/security.html">Seguridad</a><a href="services/automation.html">Automatización</a></div>
+      <div class="footer-col"><h5>Empresa</h5><a href="about.html">Nosotros</a><a href="product.html">Producto</a><a href="testimonials.html">Testimonios</a><a href="contact.html">Contacto</a></div>
+      <div class="footer-col"><h5>Contacto</h5><a href="tel:+528112345678">+52 81 1234 5678</a><a href="mailto:hola@evor.com">hola@evor.com</a><a>Monterrey, NL · México</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 EVOR. Todos los derechos reservados.</span>
+      <div class="footer-legal"><a href="#">Privacidad</a><a href="#">Términos</a></div>
+    </div>
+  </div>
+</footer>
+<script src="script.js"></script>
+<style>@keyframes fadeUp{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:translateY(0)}}</style>
+</body>
+</html>

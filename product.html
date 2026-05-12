@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Producto — Seguridad de Red Empresarial — EVOR</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* ── Product hero ──────────────────────────────────────── */
+    .prod-hero { position:relative; min-height:100vh; display:flex; align-items:center; overflow:visible; padding-top:var(--nav-h); background:var(--bg); }
+    .prod-hero-content { position:relative; z-index:2; padding:clamp(80px,10vw,140px) clamp(20px,5vw,80px); max-width:1400px; margin:0 auto; width:100%; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+    @media(max-width:900px){ .prod-hero-content{grid-template-columns:1fr} }
+
+    /* Animated hex shield */
+    .shield-wrap { position:relative; display:flex; align-items:center; justify-content:center; }
+    .shield-svg { width:min(90%,460px); filter:drop-shadow(0 0 40px rgba(255,255,255,.1)); animation:shieldBreath 6s ease-in-out infinite; }
+    @keyframes shieldBreath { 0%,100%{filter:drop-shadow(0 0 40px rgba(255,255,255,.1))} 50%{filter:drop-shadow(0 0 70px rgba(255,255,255,.2))} }
+    .shield-pulse { position:absolute; border-radius:50%; border:1px solid rgba(255,255,255,.1); animation:shieldPulse 3s ease-out infinite; }
+    .shield-pulse:nth-child(1){ width:65%; height:65%; animation-delay:0s; }
+    .shield-pulse:nth-child(2){ width:80%; height:80%; animation-delay:.7s; }
+    .shield-pulse:nth-child(3){ width:95%; height:95%; animation-delay:1.4s; }
+    @keyframes shieldPulse { 0%{opacity:.6;transform:scale(.9)} 100%{opacity:0;transform:scale(1.1)} }
+
+    /* Floating stat pills */
+    .stat-pill { position:absolute; background:rgba(10,10,10,.9); border:1px solid var(--line-2); border-radius:100px; padding:10px 18px; display:flex; align-items:center; gap:10px; backdrop-filter:blur(12px); }
+    .stat-pill-dot { width:8px; height:8px; border-radius:50%; background:#fff; animation:pulse 2s ease-in-out infinite; }
+    .stat-pill-val { font-family:var(--display); font-size:15px; font-weight:700; }
+    .stat-pill-label { font-size:11px; color:var(--muted); }
+    .pill-1 { top:10%; left:-5%; animation:float-a 8s ease-in-out infinite; }
+    .pill-2 { bottom:15%; right:-5%; animation:float-b 10s ease-in-out infinite; }
+    .pill-3 { top:55%; left:-10%; animation:float-c 9s ease-in-out infinite; }
+    @media(max-width:900px){ .stat-pill{display:none} }
+
+    /* Architecture visual */
+    .arch-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; border:1px solid var(--line); border-radius:var(--r-lg); overflow:hidden; background:var(--line); }
+    .arch-layer { background:var(--bg); padding:28px 20px; transition:background .4s; }
+    .arch-layer:hover { background:var(--ghost); }
+    .arch-layer h5 { font-family:var(--display); font-size:13px; font-weight:600; letter-spacing:.06em; margin-bottom:8px; }
+    .arch-layer p { font-size:12px; color:var(--muted); line-height:1.6; }
+    .arch-dot { width:8px; height:8px; border-radius:50%; border:1px solid var(--line-2); margin-bottom:12px; }
+    @media(max-width:600px){ .arch-grid{grid-template-columns:1fr} }
+
+    /* Feature row */
+    .feat-row { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+    @media(max-width:860px){ .feat-row{grid-template-columns:1fr;gap:48px} }
+    .feat-row-visual { aspect-ratio:1; border:1px solid var(--line); border-radius:var(--r-xl); background:var(--ghost); position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+    .feat-row-visual .grid-bg { opacity:.6; }
+
+    /* Live monitor mockup */
+    .monitor-wrap { width:80%; padding:24px; border:1px solid var(--line-2); border-radius:var(--r-md); background:rgba(0,0,0,.7); backdrop-filter:blur(20px); }
+    .monitor-header { display:flex; gap:8px; margin-bottom:16px; }
+    .monitor-dot { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.2); }
+    .monitor-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--line); font-size:11px; }
+    .monitor-row:last-child { border:none; }
+    .monitor-label { color:var(--muted); }
+    .monitor-val { font-family:var(--display); font-weight:600; }
+    .monitor-val.ok { color:#fff; }
+    .monitor-bar { height:3px; background:var(--line); border-radius:2px; margin-top:12px; overflow:hidden; }
+    .monitor-fill { height:100%; background:#fff; border-radius:2px; animation:barFill 3s ease-in-out infinite; }
+    @keyframes barFill { 0%,100%{width:72%} 50%{width:85%} }
+
+    /* Stats big grid */
+    .stats-big { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; border:1px solid var(--line); border-radius:var(--r-xl); overflow:hidden; background:var(--line); }
+    @media(max-width:700px){ .stats-big{grid-template-columns:repeat(2,1fr)} }
+    .stat-big-cell { background:var(--bg); padding:48px 32px; text-align:center; }
+    .stat-big-cell:hover { background:var(--ghost); }
+
+    /* Feature card minimal */
+    .mini-feat { display:flex; flex-direction:column; gap:12px; padding:28px; border:1px solid var(--line); border-radius:var(--r-md); background:var(--ghost); transition:all .4s var(--ease); }
+    .mini-feat:hover { border-color:var(--line-2); transform:translateY(-3px); }
+    .mini-feat h4 { font-family:var(--display); font-size:16px; font-weight:600; }
+    .mini-feat p { font-size:13px; color:var(--muted); line-height:1.6; }
+    .mini-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+  </style>
+</head>
+<body>
+<div id="loader"><div class="loader-logo"><span>E</span><span>V</span><span>O</span><span>R</span></div></div>
+<div id="page-overlay"></div>
+<div class="cursor"></div><div class="cursor-ring"></div>
+<nav class="nav">
+  <a href="index.html" class="nav-logo">EVOR</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li><li><a href="about.html">Nosotros</a></li>
+    <li><a href="services.html">Servicios</a></li><li><a href="product.html">Producto</a></li>
+    <li><a href="testimonials.html">Testimonios</a></li><li><a href="contact.html">Contacto</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Demo <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+  <button class="nav-burger"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-mobile">
+  <a href="index.html">Inicio</a><a href="about.html">Nosotros</a><a href="services.html">Servicios</a>
+  <a href="product.html">Producto</a><a href="testimonials.html">Testimonios</a><a href="contact.html">Contacto</a>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="prod-hero">
+  <div class="grid-bg grid-bg-fade"></div>
+  <div class="shape-float" style="width:500px;height:500px;background:radial-gradient(circle,rgba(255,255,255,.07),transparent 65%);top:-100px;left:-200px;animation:float-a 22s ease-in-out infinite;" data-parallax="0.15"></div>
+
+  <div class="prod-hero-content">
+    <div>
+      <span class="eyebrow" style="animation:fadeUp .8s var(--ease) .2s both;opacity:0;">Producto principal</span>
+      <h1 class="display-xl grad-text" style="animation:fadeUp 1s var(--ease) .35s both;opacity:0;margin-bottom:28px;">Seguridad de red empresarial.</h1>
+      <p class="lead" style="animation:fadeUp 1s var(--ease) .5s both;opacity:0;margin-bottom:40px;">La única plataforma de seguridad que necesitas. Firewall, VPN, monitoreo y auditoría en un único sistema administrado, diseñado para empresas que no pueden arriesgarse.</p>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;animation:fadeUp 1s var(--ease) .65s both;opacity:0;">
+        <a href="contact.html" class="btn btn-primary">Solicitar demo <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a href="#features" class="btn btn-ghost">Ver características</a>
+      </div>
+      <div style="display:flex;gap:32px;margin-top:48px;animation:fadeUp 1s var(--ease) .8s both;opacity:0;">
+        <div><div class="stat-num" style="font-size:36px;" data-count="99.9" data-suffix="%">0%</div><div class="stat-label">Uptime</div></div>
+        <div><div class="stat-num" style="font-size:36px;" data-count="0" data-suffix="s">0s</div><div class="stat-label">Latencia añadida</div></div>
+        <div><div class="stat-num" style="font-size:36px;" data-count="24" data-suffix="/7">0/7</div><div class="stat-label">Monitoreo</div></div>
+      </div>
+    </div>
+
+    <div class="shield-wrap" style="animation:fadeUp 1.2s var(--ease) .5s both;opacity:0;">
+      <div class="shield-pulse"></div>
+      <div class="shield-pulse"></div>
+      <div class="shield-pulse"></div>
+      <svg class="shield-svg" viewBox="0 0 300 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M150 10L20 60V170C20 245 80 305 150 330C220 305 280 245 280 170V60L150 10Z" stroke="rgba(255,255,255,.5)" stroke-width="1.5" fill="rgba(255,255,255,.02)"/>
+        <path d="M150 35L45 78V170C45 232 93 284 150 308C207 284 255 232 255 170V78L150 35Z" stroke="rgba(255,255,255,.3)" stroke-width="1" fill="rgba(255,255,255,.02)"/>
+        <path d="M150 60L70 96V170C70 219 106 263 150 286C194 263 230 219 230 170V96L150 60Z" stroke="rgba(255,255,255,.2)" stroke-width="1" fill="rgba(255,255,255,.03)"/>
+        <circle cx="150" cy="168" r="36" stroke="rgba(255,255,255,.6)" stroke-width="1.5" fill="rgba(255,255,255,.05)"/>
+        <path d="M136 168l10 10 20-20" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Scan lines -->
+        <line x1="80" y1="130" x2="220" y2="130" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+        <line x1="80" y1="150" x2="220" y2="150" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+        <line x1="80" y1="170" x2="220" y2="170" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+        <line x1="80" y1="190" x2="220" y2="190" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+        <line x1="80" y1="210" x2="220" y2="210" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+        <!-- Corner accents -->
+        <path d="M20 80L20 60L40 60" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+        <path d="M280 80L280 60L260 60" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <!-- Floating stat pills -->
+      <div class="stat-pill pill-1">
+        <div class="stat-pill-dot"></div>
+        <div><div class="stat-pill-val">Firewall</div><div class="stat-pill-label">Activo · 0 amenazas</div></div>
+      </div>
+      <div class="stat-pill pill-2">
+        <div class="stat-pill-dot"></div>
+        <div><div class="stat-pill-val">VPN</div><div class="stat-pill-label">12 túneles activos</div></div>
+      </div>
+      <div class="stat-pill pill-3">
+        <div class="stat-pill-dot"></div>
+        <div><div class="stat-pill-val">SOC</div><div class="stat-pill-label">Monitoreo en vivo</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STATS ══ -->
+<div style="border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div style="max-width:1400px;margin:0 auto;">
+    <div class="stats-big reveal">
+      <div class="stat-big-cell">
+        <div class="stat-num" data-count="120" data-suffix="+">0+</div>
+        <div class="stat-label">Empresas protegidas</div>
+      </div>
+      <div class="stat-big-cell">
+        <div class="stat-num" data-count="2.4" data-suffix="M">0M</div>
+        <div class="stat-label">Amenazas bloqueadas / mes</div>
+      </div>
+      <div class="stat-big-cell">
+        <div class="stat-num" data-count="0" data-suffix="ms">0ms</div>
+        <div class="stat-label">Latencia añadida promedio</div>
+      </div>
+      <div class="stat-big-cell">
+        <div class="stat-num" data-count="99.9" data-suffix="%">0%</div>
+        <div class="stat-label">SLA de disponibilidad</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FEATURES ══ -->
+<div id="features" class="section" style="max-width:1400px;margin:0 auto;">
+  <span class="eyebrow reveal">Características</span>
+  <h2 class="display reveal d1" style="margin-bottom:80px;">Cuatro capas de protección.</h2>
+
+  <!-- Feature 1: Firewall -->
+  <div class="feat-row" style="margin-bottom:120px;">
+    <div class="reveal">
+      <span class="tag" style="margin-bottom:20px;display:inline-block;">Firewall de nueva generación</span>
+      <h3 class="display-sm" style="margin-bottom:20px;">Control total del tráfico de red.</h3>
+      <p class="lead" style="margin-bottom:32px;">Inspección profunda de paquetes (DPI) con análisis de contenido a nivel de aplicación. Reglas dinámicas que se adaptan a los patrones de tráfico de tu empresa.</p>
+      <div class="mini-grid">
+        <div class="mini-feat"><h4>IPS/IDS</h4><p>Detección y prevención de intrusiones con firmas actualizadas en tiempo real.</p></div>
+        <div class="mini-feat"><h4>Segmentación VLAN</h4><p>Aislamiento de segmentos críticos para minimizar el radio de impacto de incidentes.</p></div>
+        <div class="mini-feat"><h4>Filtrado web</h4><p>Control de categorías de sitios y bloqueo de C&C conocidos y dominios maliciosos.</p></div>
+        <div class="mini-feat"><h4>QoS</h4><p>Priorización de tráfico crítico para garantizar el rendimiento de aplicaciones clave.</p></div>
+      </div>
+    </div>
+    <div class="feat-row-visual reveal-scale d2">
+      <div class="grid-bg"></div>
+      <div class="monitor-wrap" style="position:relative;z-index:1;">
+        <div class="monitor-header"><div class="monitor-dot"></div><div class="monitor-dot"></div><div class="monitor-dot"></div></div>
+        <div style="font-family:var(--display);font-size:11px;color:var(--muted);margin-bottom:16px;letter-spacing:.1em;">FIREWALL — ESTADO EN VIVO</div>
+        <div class="monitor-row"><span class="monitor-label">Amenazas bloqueadas hoy</span><span class="monitor-val ok">1,284</span></div>
+        <div class="monitor-row"><span class="monitor-label">Reglas activas</span><span class="monitor-val ok">847</span></div>
+        <div class="monitor-row"><span class="monitor-label">Sesiones activas</span><span class="monitor-val ok">3,421</span></div>
+        <div class="monitor-row"><span class="monitor-label">Ancho de banda usado</span><span class="monitor-val ok">72%</span></div>
+        <div class="monitor-row"><span class="monitor-label">Estado general</span><span class="monitor-val ok">● Protegido</span></div>
+        <div class="monitor-bar"><div class="monitor-fill"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feature 2: VPN -->
+  <div class="feat-row" style="margin-bottom:120px;direction:rtl;">
+    <div class="reveal" style="direction:ltr;">
+      <span class="tag" style="margin-bottom:20px;display:inline-block;">VPN Corporativa</span>
+      <h3 class="display-sm" style="margin-bottom:20px;">Acceso seguro desde cualquier lugar.</h3>
+      <p class="lead" style="margin-bottom:32px;">Túneles cifrados con AES-256 para tu equipo distribuido. Acceso con autenticación multifactor, zero-trust y segmentación por rol de usuario.</p>
+      <div class="mini-grid">
+        <div class="mini-feat"><h4>Zero Trust</h4><p>Verificación continua de identidad y contexto para cada sesión de acceso.</p></div>
+        <div class="mini-feat"><h4>Split tunneling</h4><p>Optimización del tráfico: solo el tráfico corporativo va por el túnel VPN.</p></div>
+        <div class="mini-feat"><h4>MFA integrado</h4><p>Segundo factor de autenticación obligatorio con soporte para apps TOTP y FIDO2.</p></div>
+        <div class="mini-feat"><h4>Gestión centralizada</h4><p>Panel único para aprobar, revocar y auditar accesos de todos los usuarios.</p></div>
+      </div>
+    </div>
+    <div class="feat-row-visual reveal-scale d1" style="direction:ltr;">
+      <div class="grid-bg"></div>
+      <svg viewBox="0 0 300 300" fill="none" style="width:70%;position:relative;z-index:1;opacity:.7;">
+        <circle cx="150" cy="150" r="100" stroke="rgba(255,255,255,.2)" stroke-width="1" stroke-dasharray="4 8"/>
+        <circle cx="150" cy="150" r="65" stroke="rgba(255,255,255,.3)" stroke-width="1"/>
+        <circle cx="150" cy="150" r="30" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.5)" stroke-width="1.5"/>
+        <text x="150" y="154" text-anchor="middle" fill="#fff" font-size="10" font-family="monospace">VPN</text>
+        <!-- Nodes -->
+        <circle cx="50" cy="150" r="12" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.4)" stroke-width="1"/>
+        <circle cx="250" cy="150" r="12" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.4)" stroke-width="1"/>
+        <circle cx="150" cy="50" r="12" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.4)" stroke-width="1"/>
+        <circle cx="150" cy="250" r="12" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.4)" stroke-width="1"/>
+        <!-- Lines -->
+        <line x1="62" y1="150" x2="120" y2="150" stroke="rgba(255,255,255,.3)" stroke-width="1" stroke-dasharray="4 4"/>
+        <line x1="180" y1="150" x2="238" y2="150" stroke="rgba(255,255,255,.3)" stroke-width="1" stroke-dasharray="4 4"/>
+        <line x1="150" y1="62" x2="150" y2="120" stroke="rgba(255,255,255,.3)" stroke-width="1" stroke-dasharray="4 4"/>
+        <line x1="150" y1="180" x2="150" y2="238" stroke="rgba(255,255,255,.3)" stroke-width="1" stroke-dasharray="4 4"/>
+        <circle cx="50" cy="150" r="4" fill="#fff" opacity=".8"><animate attributeName="opacity" values=".8;.3;.8" dur="2s" repeatCount="indefinite"/></circle>
+        <circle cx="250" cy="150" r="4" fill="#fff" opacity=".8"><animate attributeName="opacity" values=".8;.3;.8" dur="2.5s" repeatCount="indefinite"/></circle>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Feature 3: Monitoring -->
+  <div class="feat-row" style="margin-bottom:120px;">
+    <div class="reveal">
+      <span class="tag" style="margin-bottom:20px;display:inline-block;">Monitoreo en tiempo real</span>
+      <h3 class="display-sm" style="margin-bottom:20px;">Visibilidad total de tu red.</h3>
+      <p class="lead" style="margin-bottom:32px;">Detección de anomalías basada en IA, correlación de eventos de seguridad y alertas instantáneas con contexto suficiente para actuar de inmediato.</p>
+      <div class="mini-grid">
+        <div class="mini-feat"><h4>SIEM integrado</h4><p>Correlación automática de eventos y generación de incidentes con priorización por severidad.</p></div>
+        <div class="mini-feat"><h4>Detección de anomalías</h4><p>IA entrenada en patrones de tu red para detectar comportamientos inusuales antes de que sean incidentes.</p></div>
+        <div class="mini-feat"><h4>Alertas multicanal</h4><p>Notificaciones vía email, SMS y Teams con información de contexto y pasos de contención sugeridos.</p></div>
+        <div class="mini-feat"><h4>Dashboard ejecutivo</h4><p>Reportes mensuales para gerencia y CISO con postura de seguridad, tendencias y KPIs clave.</p></div>
+      </div>
+    </div>
+    <div class="feat-row-visual reveal-scale d2">
+      <div class="grid-bg"></div>
+      <svg viewBox="0 0 300 200" fill="none" style="width:80%;position:relative;z-index:1;opacity:.7;">
+        <polyline points="20,160 60,120 100,140 140,80 180,100 220,40 260,60 290,50" stroke="rgba(255,255,255,.6)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline points="20,180 60,175 100,170 140,165 180,160 220,140 260,130 290,125" stroke="rgba(255,255,255,.2)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="220" cy="40" r="6" fill="#fff" opacity=".9"/>
+        <circle cx="140" cy="80" r="4" fill="rgba(255,255,255,.6)"/>
+        <line x1="0" y1="190" x2="300" y2="190" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+        <line x1="0" y1="130" x2="300" y2="130" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+        <line x1="0" y1="70" x2="300" y2="70" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Architecture -->
+  <div class="reveal">
+    <span class="eyebrow">Arquitectura</span>
+    <h3 class="display-sm" style="margin-bottom:48px;">Seguridad en capas.</h3>
+    <div class="arch-grid">
+      <div class="arch-layer"><div class="arch-dot"></div><h5>Perímetro</h5><p>Firewall NGFW, IPS/IDS, DDoS mitigation y filtrado de reputación de IPs.</p></div>
+      <div class="arch-layer"><div class="arch-dot"></div><h5>Red interna</h5><p>Segmentación VLAN, microsegmentación, inspección este-oeste y control de NAC.</p></div>
+      <div class="arch-layer"><div class="arch-dot"></div><h5>Endpoint</h5><p>EDR, control de dispositivos, patch management y encriptación de disco.</p></div>
+      <div class="arch-layer"><div class="arch-dot"></div><h5>Identidad</h5><p>MFA, privileged access management (PAM) y zero-trust network access.</p></div>
+      <div class="arch-layer"><div class="arch-dot"></div><h5>Datos</h5><p>DLP, clasificación automática, cifrado en reposo y control de acceso granular.</p></div>
+      <div class="arch-layer"><div class="arch-dot"></div><h5>Visibilidad</h5><p>SIEM, SOAR, logging centralizado y correlación de eventos en tiempo real.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div style="background:var(--bg-2);border-top:1px solid var(--line);padding:clamp(80px,10vw,140px) clamp(20px,5vw,80px);text-align:center;position:relative;overflow:hidden;">
+  <div class="grid-bg grid-bg-fade"></div>
+  <div style="position:relative;z-index:1;">
+    <h2 class="display-xl grad-text reveal" style="margin-bottom:24px;">¿Tu red está segura?</h2>
+    <p class="lead reveal d1" style="margin:0 auto 48px;">Solicita una demo personalizada. Te mostramos el sistema funcionando sobre una red similar a la tuya en 30 minutos.</p>
+    <div class="reveal d2" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <a href="contact.html" class="btn btn-primary">Solicitar demo <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <a href="services.html" class="btn btn-ghost">Ver todos los servicios</a>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand"><div class="footer-logo-text">EVOR</div><p>Tecnología que impulsa tu empresa.</p><div class="footer-social">
+          <a href="https://www.facebook.com/evor" target="_blank" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/evor.mx" target="_blank" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/company/evor" target="_blank" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="https://wa.me/528112345678" target="_blank" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </a>
+        </div></div>
+      <div class="footer-col"><h5>Servicios</h5><a href="services/m365.html">Microsoft 365</a><a href="services/email.html">Correo empresarial</a><a href="services/security.html">Seguridad</a><a href="services/automation.html">Automatización</a></div>
+      <div class="footer-col"><h5>Empresa</h5><a href="about.html">Nosotros</a><a href="product.html">Producto</a><a href="testimonials.html">Testimonios</a><a href="contact.html">Contacto</a></div>
+      <div class="footer-col"><h5>Contacto</h5><a href="tel:+528112345678">+52 81 1234 5678</a><a href="mailto:hola@evor.com">hola@evor.com</a><a>Monterrey, NL · México</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 EVOR. Todos los derechos reservados.</span><div class="footer-legal"><a href="#">Privacidad</a><a href="#">Términos</a></div></div>
+  </div>
+</footer>
+<script src="script.js"></script>
+<style>@keyframes fadeUp{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:translateY(0)}}</style>
+</body>
+</html>

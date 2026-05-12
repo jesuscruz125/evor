@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Testimonios — EVOR</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+
+    /* ══ Hero ════════════════════════════════════════════════ */
+    .testi-hero {
+      background: var(--bg-2);
+      border-bottom: 1px solid var(--line);
+    }
+
+    /* ══ Featured carousel ════════════════════════════════════ */
+    .carousel-section {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(80px,10vw,140px) 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .carousel-viewport {
+      overflow: hidden;
+      padding: 0 clamp(20px,5vw,80px);
+    }
+    .testi-track {
+      display: flex;
+      transition: transform .7s cubic-bezier(.4,0,.2,1);
+      will-change: transform;
+    }
+    .testi-slide {
+      min-width: 100%;
+      flex-shrink: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      box-sizing: border-box;
+    }
+    @media(max-width:800px){ .testi-slide{grid-template-columns:1fr;gap:36px} }
+
+    .testi-quote-wrap {
+      position: relative;
+    }
+    .testi-quotemark {
+      font-family: var(--display);
+      font-size: 180px;
+      line-height: .7;
+      color: rgba(255,255,255,.04);
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      pointer-events: none;
+      user-select: none;
+    }
+    .testi-quote {
+      font-family: var(--display);
+      font-size: clamp(22px, 2.8vw, 36px);
+      font-weight: 500;
+      letter-spacing: -.02em;
+      line-height: 1.35;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 36px;
+      color: rgba(255,255,255,.9);
+    }
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .testi-avatar {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #222, #444);
+      border: 1px solid var(--line-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .testi-author-info h4 {
+      font-family: var(--display);
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .testi-author-info span {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* Metrics panel */
+    .testi-metrics {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .testi-metric-card {
+      padding: 28px 32px;
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      background: var(--ghost);
+      transition: all .4s var(--ease);
+    }
+    .testi-metric-card:hover {
+      border-color: var(--line-2);
+      transform: translateX(4px);
+    }
+    .testi-metric-val {
+      font-family: var(--display);
+      font-size: 40px;
+      font-weight: 800;
+      letter-spacing: -.04em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .testi-metric-label {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .testi-service-tag {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 4px 12px;
+      border: 1px solid var(--line-2);
+      border-radius: 100px;
+      font-size: 11px;
+      color: var(--faint);
+      letter-spacing: .05em;
+    }
+
+    /* Controls */
+    .carousel-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 48px clamp(20px,5vw,80px) 0;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .testi-dots {
+      display: flex;
+      gap: 10px;
+    }
+    .testi-dot {
+      width: 28px; height: 3px;
+      border-radius: 2px;
+      background: var(--line-2);
+      cursor: pointer;
+      transition: all .4s var(--ease);
+    }
+    .testi-dot.active {
+      background: #fff;
+      width: 48px;
+    }
+    .carousel-btns {
+      display: flex;
+      gap: 12px;
+    }
+    .testi-prev, .testi-next {
+      width: 44px; height: 44px;
+      border: 1px solid var(--line-2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: all .4s var(--ease);
+    }
+    .testi-prev svg, .testi-next svg {
+      width: 16px; height: 16px;
+      stroke: #fff;
+      transition: all .4s var(--ease);
+    }
+    .testi-prev:hover, .testi-next:hover {
+      background: #fff;
+      border-color: #fff;
+    }
+    .testi-prev:hover svg, .testi-next:hover svg { stroke: #000; }
+
+    /* ══ Grid cards ═══════════════════════════════════════════ */
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+      gap: 20px;
+    }
+    .testi-card {
+      padding: 32px 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      background: var(--ghost);
+      position: relative;
+      overflow: hidden;
+      transition: all .5s var(--ease);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .testi-card::after {
+      content:'';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.06), transparent 60%);
+      opacity: 0;
+      transition: opacity .4s;
+      pointer-events: none;
+    }
+    .testi-card:hover {
+      border-color: var(--line-2);
+      transform: translateY(-6px);
+    }
+    .testi-card:hover::after { opacity: 1; }
+
+    .testi-card-stars { color: #fff; font-size: 13px; letter-spacing: 3px; }
+    .testi-card-text {
+      font-size: 15px;
+      color: rgba(255,255,255,.8);
+      line-height: 1.7;
+      flex: 1;
+    }
+    .testi-card-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+    .testi-card-av {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1a1a1a, #333);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--display);
+      font-size: 14px;
+      font-weight: 700;
+      border: 1px solid var(--line-2);
+      flex-shrink: 0;
+    }
+    .testi-card-author h5 {
+      font-family: var(--display);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .testi-card-author span {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .testi-service {
+      font-size: 11px;
+      color: var(--faint);
+      letter-spacing: .06em;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+    }
+
+    /* ══ Company logos marquee ════════════════════════════════ */
+    .logos-section {
+      padding: 64px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--bg-2);
+    }
+    .logos-label {
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 36px;
+    }
+
+    /* ══ Stats strip ══════════════════════════════════════════ */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    @media(max-width:680px){ .stats-strip{grid-template-columns:repeat(2,1fr)} }
+    .stat-strip-cell {
+      padding: 48px 32px;
+      text-align: center;
+      border-right: 1px solid var(--line);
+      transition: background .4s;
+    }
+    .stat-strip-cell:last-child { border-right: none; }
+    .stat-strip-cell:hover { background: var(--ghost); }
+
+  </style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="loader-logo"><span>E</span><span>V</span><span>O</span><span>R</span></div>
+</div>
+<div id="page-overlay"></div>
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">EVOR</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="about.html">Nosotros</a></li>
+    <li><a href="services.html">Servicios</a></li>
+    <li><a href="product.html">Producto</a></li>
+    <li><a href="testimonials.html">Testimonios</a></li>
+    <li><a href="contact.html">Contacto</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Comenzar
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+    </svg>
+  </a>
+  <button class="nav-burger" aria-label="Menú"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-mobile">
+  <a href="index.html">Inicio</a><a href="about.html">Nosotros</a><a href="services.html">Servicios</a>
+  <a href="product.html">Producto</a><a href="testimonials.html">Testimonios</a><a href="contact.html">Contacto</a>
+</div>
+
+<!-- HERO -->
+<section class="hero testi-hero" style="min-height:60vh;">
+  <div class="grid-bg grid-bg-fade"></div>
+  <div class="hero-content">
+    <span class="eyebrow" style="animation:fadeUp .8s var(--ease) .2s both;opacity:0;">Testimonios</span>
+    <h1 class="display-xl grad-text"
+        style="animation:fadeUp 1s var(--ease) .35s both;opacity:0;max-width:900px;">
+      Lo que dicen nuestros clientes.
+    </h1>
+    <p class="lead" style="animation:fadeUp 1s var(--ease) .5s both;opacity:0;margin-top:24px;">
+      Más de 120 empresas en el norte de México han transformado su infraestructura digital con EVOR.
+      Estos son algunos de sus resultados.
+    </p>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip reveal">
+  <div class="stat-strip-cell">
+    <div class="stat-num" data-count="120" data-suffix="+">0+</div>
+    <div class="stat-label">Clientes activos</div>
+  </div>
+  <div class="stat-strip-cell">
+    <div class="stat-num" data-count="4.9" data-suffix="/5">0/5</div>
+    <div class="stat-label">Calificación promedio</div>
+  </div>
+  <div class="stat-strip-cell">
+    <div class="stat-num" data-count="97" data-suffix="%">0%</div>
+    <div class="stat-label">Tasa de renovación</div>
+  </div>
+  <div class="stat-strip-cell">
+    <div class="stat-num" data-count="8" data-suffix=" años">0 años</div>
+    <div class="stat-label">Promedio de relación</div>
+  </div>
+</div>
+
+<!-- FEATURED CAROUSEL -->
+<section class="carousel-section">
+  <div class="carousel-viewport">
+    <div class="testi-track">
+
+      <!-- SLIDE 1 -->
+      <div class="testi-slide">
+        <div class="testi-quote-wrap">
+          <div class="testi-quotemark">"</div>
+          <p class="testi-quote">
+            "EVOR transformó por completo cómo gestionamos nuestra infraestructura Microsoft. En menos de 45 días teníamos Teams, SharePoint y el correo corporativo funcionando de manera impecable. El ahorro en licencias fue inmediato."
+          </p>
+          <div class="testi-author">
+            <div class="testi-avatar">MR</div>
+            <div class="testi-author-info">
+              <h4>Miguel Rodríguez</h4>
+              <span>Director de TI · Grupo Vitro Industrial</span>
+            </div>
+          </div>
+        </div>
+        <div class="testi-metrics">
+          <div class="testi-metric-card">
+            <div class="testi-metric-val">-28%</div>
+            <div class="testi-metric-label">Reducción en costos de licencias M365</div>
+            <div class="testi-service-tag">Microsoft 365</div>
+          </div>
+          <div class="testi-metric-card">
+            <div class="testi-metric-val">45 días</div>
+            <div class="testi-metric-label">Tiempo total de implementación</div>
+            <div class="testi-service-tag">Implementación</div>
+          </div>
+          <div class="testi-metric-card">
+            <div class="testi-metric-val">320</div>
+            <div class="testi-metric-label">Usuarios migrados sin incidencias</div>
+            <div class="testi-service-tag">Migración</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 2 -->
+      <div class="testi-slide">
+        <div class="testi-quote-wrap">
+          <div class="testi-quotemark">"</div>
+          <p class="testi-quote">
+            "Antes del módulo de seguridad de EVOR tuvimos un incidente de ransomware que nos paralizó 3 días. Ahora tenemos firewall, backup diario y un plan de recuperación probado. Dormimos tranquilos por primera vez en años."
+          </p>
+          <div class="testi-author">
+            <div class="testi-avatar">AL</div>
+            <div class="testi-author-info">
+              <h4>Alejandra López</h4>
+              <span>CEO · Distribuidora Norteña del Pacífico</span>
+            </div>
+          </div>
+        </div>
+        <div class="testi-metrics">
+          <div class="testi-metric-card">
+            <div class="testi-metric-val">0</div>
+            <div class="testi-metric-label">Incidentes de seguridad en 18 meses</div>
+            <div class="testi-service-tag">Seguridad</div>
+          </div>
+          <div class="testi-metric-card">
+            <div class="testi-metric-val">4 hrs</div>
+            <div class="testi-metric-label">RTO garantizado en plan de recuperación</div>
+            <div class="testi-service-tag">DRP</div>
+          </div>
+          <div class="testi-metric-card">
+            <div class="testi-metric-val">100%</div>
+            <div class="testi-metric-label">Datos recuperables ante cualquier falla</div>
+            <div class="testi-service-tag">Backup</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 3 -->
+      <div class="testi-slide">
+        <div class="testi-quote-wrap">
+          <div class="testi-quotemark">"</div>
+          <p class="testi-quote">
+            "La automatización de nuestro proceso de facturación y aprobaciones fue un antes y un después. Lo que antes tomaba 3 días ahora se hace en 2 horas. El equipo de EVOR entendió nuestro negocio desde la primera reunión."
+          </p>
+          <div class="testi-author">
+            <div class="testi-avatar">CR</div>
+            <div class="testi-author-info">
+              <h4>Carlos Ramírez</h4>
+              <span>CFO · Constructora Regio Metropolitana</span>
+            </div>
+          </div>
+        </div>
+        <div class="testi-metrics">
+          <div class="testi-metric-card">
+            <div class="testi-metric-val">-92%</div>
+            <div class="testi-metric-label">Reducción en tiempo de aprobación de facturas</div>
+            <div class="testi-service-tag">Automatización</div>
+          </div>
+          <div class="testi-metric-card">
+            <div class="testi-metric-val">380%</div>
+            <div class="testi-metric-label">ROI en el primer año de implementación</div>
+            <div class="testi-service-tag">Power Automate</div>
+          </div>
+          <div class="testi-metric-card">
+            <div class="testi-metric-val">6 sem.</div>
+            <div class="testi-metric-label">Tiempo total de implementación de flujos</div>
+            <div class="testi-service-tag">Implementación</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 4 -->
+      <div class="testi-slide">
+        <div class="testi-quote-wrap">
+          <div class="testi-quotemark">"</div>
+          <p class="testi-quote">
+            "El correo de nuestra empresa era un desastre: llegaba a spam, teníamos problemas de entrega y nadie lo administraba correctamente. EVOR lo resolvió en un fin de semana y ahora tenemos visibilidad total sobre cada mensaje."
+          </p>
+          <div class="testi-author">
+            <div class="testi-avatar">SV</div>
+            <div class="testi-author-info">
+              <h4>Sofía Vázquez</h4>
+              <span>Directora General · Clínica Médica San Rafael</span>
+            </div>
+          </div>
+        </div>
+        <div class="testi-metrics">
+          <div class="testi-metric-card">
+            <div class="testi-metric-val">-97%</div>
+            <div class="testi-metric-label">Reducción de spam recibido en buzones</div>
+            <div class="testi-service-tag">Correo empresarial</div>
+          </div>
+          <div class="testi-metric-card">
+            <div class="testi-metric-val">99.8%</div>
+            <div class="testi-metric-label">Tasa de entregabilidad de correos salientes</div>
+            <div class="testi-service-tag">Entregabilidad</div>
+          </div>
+          <div class="testi-metric-card">
+            <div class="testi-metric-val">2 días</div>
+            <div class="testi-metric-label">Tiempo de migración de 85 buzones</div>
+            <div class="testi-service-tag">Migración</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /testi-track -->
+  </div>
+
+  <div class="carousel-controls">
+    <div class="testi-dots">
+      <div class="testi-dot active"></div>
+      <div class="testi-dot"></div>
+      <div class="testi-dot"></div>
+      <div class="testi-dot"></div>
+    </div>
+    <div class="carousel-btns">
+      <button class="testi-prev" aria-label="Anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+        </svg>
+      </button>
+      <button class="testi-next" aria-label="Siguiente">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- COMPANY LOGOS MARQUEE -->
+<div class="logos-section">
+  <p class="logos-label">Empresas que confían en EVOR</p>
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <!-- Set 1 -->
+      <div class="marquee-item">Grupo Vitro Industrial</div>
+      <div class="marquee-item">Distribuidora Norteña</div>
+      <div class="marquee-item">Constructora Regio</div>
+      <div class="marquee-item">Clínica San Rafael</div>
+      <div class="marquee-item">Transportes del Norte</div>
+      <div class="marquee-item">Corporativo Garza</div>
+      <div class="marquee-item">Grupo Financiero NL</div>
+      <div class="marquee-item">Manufactura Regiomontana</div>
+      <div class="marquee-item">Hotel Monterrey Prime</div>
+      <div class="marquee-item">Abogados &amp; Asociados MX</div>
+      <!-- Set 2 duplicate -->
+      <div class="marquee-item">Grupo Vitro Industrial</div>
+      <div class="marquee-item">Distribuidora Norteña</div>
+      <div class="marquee-item">Constructora Regio</div>
+      <div class="marquee-item">Clínica San Rafael</div>
+      <div class="marquee-item">Transportes del Norte</div>
+      <div class="marquee-item">Corporativo Garza</div>
+      <div class="marquee-item">Grupo Financiero NL</div>
+      <div class="marquee-item">Manufactura Regiomontana</div>
+      <div class="marquee-item">Hotel Monterrey Prime</div>
+      <div class="marquee-item">Abogados &amp; Asociados MX</div>
+    </div>
+  </div>
+</div>
+
+<!-- GRID OF CARDS -->
+<div class="section" style="max-width:1400px;margin:0 auto;">
+  <span class="eyebrow reveal">Más historias</span>
+  <h2 class="display reveal d1" style="margin-bottom:56px;">Lo que dicen.</h2>
+  <div class="testi-grid">
+
+    <div class="testi-card reveal d1">
+      <div class="testi-card-stars">★★★★★</div>
+      <p class="testi-card-text">"Llevamos 4 años con EVOR administrando todo nuestro entorno Microsoft. Lo que más valoramos es que nunca tenemos que preocuparnos: ellos están al pendiente antes de que nosotros notemos cualquier problema."</p>
+      <div class="testi-card-author">
+        <div class="testi-card-av">FG</div>
+        <div>
+          <h5>Fernando Garza</h5>
+          <span>Director de Operaciones · Logística Express NL</span>
+        </div>
+      </div>
+      <div class="testi-service">Servicio: Microsoft 365 + Seguridad</div>
+    </div>
+
+    <div class="testi-card reveal d2">
+      <div class="testi-card-stars">★★★★★</div>
+      <p class="testi-card-text">"Migrar nuestro correo era algo que teníamos postergando 2 años por miedo a perder información. EVOR lo hizo en 48 horas sin que ningún empleado notara la diferencia. Impresionante ejecución."</p>
+      <div class="testi-card-author">
+        <div class="testi-card-av">IP</div>
+        <div>
+          <h5>Isabela Pérez</h5>
+          <span>Gerente TI · Grupo Textil del Norte</span>
+        </div>
+      </div>
+      <div class="testi-service">Servicio: Correo empresarial</div>
+    </div>
+
+    <div class="testi-card reveal d3">
+      <div class="testi-card-stars">★★★★★</div>
+      <p class="testi-card-text">"La automatización de onboarding de empleados nos ahorró 12 horas de trabajo manual por cada contratación. Ahora, cuando entra alguien nuevo, todo está listo desde el primer día automáticamente."</p>
+      <div class="testi-card-author">
+        <div class="testi-card-av">RO</div>
+        <div>
+          <h5>Rodrigo Ortega</h5>
+          <span>VP de Recursos Humanos · Retail Norteño S.A.</span>
+        </div>
+      </div>
+      <div class="testi-service">Servicio: Automatización de procesos</div>
+    </div>
+
+    <div class="testi-card reveal d4">
+      <div class="testi-card-stars">★★★★★</div>
+      <p class="testi-card-text">"El equipo de EVOR nos ayudó a pasar una auditoría ISO 27001 sin contratiempos. Tenían toda la documentación, los controles y las evidencias perfectamente organizadas. Es un partner de verdad, no solo un proveedor."</p>
+      <div class="testi-card-author">
+        <div class="testi-card-av">LM</div>
+        <div>
+          <h5>Lucía Morales</h5>
+          <span>CISO · Financiera Monterrey Capital</span>
+        </div>
+      </div>
+      <div class="testi-service">Servicio: Seguridad y continuidad</div>
+    </div>
+
+    <div class="testi-card reveal d5">
+      <div class="testi-card-stars">★★★★★</div>
+      <p class="testi-card-text">"Tenemos sedes en 4 ciudades y EVOR nos dio visibilidad unificada de toda nuestra red. El dashboard de seguridad en tiempo real fue un game changer para nuestro equipo directivo."</p>
+      <div class="testi-card-author">
+        <div class="testi-card-av">HT</div>
+        <div>
+          <h5>Héctor Torres</h5>
+          <span>Director General · Corporativo HT Inmobiliaria</span>
+        </div>
+      </div>
+      <div class="testi-service">Servicio: Seguridad de Red Empresarial</div>
+    </div>
+
+    <div class="testi-card reveal d6">
+      <div class="testi-card-stars">★★★★★</div>
+      <p class="testi-card-text">"Cuando tuvimos un intento de phishing dirigido a nuestra directiva, el sistema de EVOR lo detectó y bloqueó en segundos. Sin ese sistema, podría haber sido un desastre. Esa sola vez justificó años de inversión."</p>
+      <div class="testi-card-author">
+        <div class="testi-card-av">YC</div>
+        <div>
+          <h5>Yazmin Cantú</h5>
+          <span>CEO · Despacho Jurídico Cantú &amp; Partners</span>
+        </div>
+      </div>
+      <div class="testi-service">Servicio: Correo + Seguridad</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CTA -->
+<div style="background:var(--bg-2);border-top:1px solid var(--line);padding:clamp(80px,10vw,140px) clamp(20px,5vw,80px);text-align:center;position:relative;overflow:hidden;">
+  <div class="grid-bg grid-bg-fade"></div>
+  <div style="position:relative;z-index:1;">
+    <h2 class="display-xl grad-text reveal" style="margin-bottom:24px;">Sé el siguiente.</h2>
+    <p class="lead reveal d1" style="margin:0 auto 48px;">
+      Únete a más de 120 empresas que ya transformaron su infraestructura digital con EVOR.
+    </p>
+    <div class="reveal d2" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <a href="contact.html" class="btn btn-primary">
+        Comenzar ahora
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </a>
+      <a href="services.html" class="btn btn-ghost">Ver servicios</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo-text">EVOR</div>
+        <p>Tecnología que impulsa tu empresa. Soluciones de élite para negocios que no se detienen.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/evor" target="_blank" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/evor.mx" target="_blank" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/company/evor" target="_blank" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="https://wa.me/528112345678" target="_blank" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Servicios</h5>
+        <a href="services/m365.html">Microsoft 365</a>
+        <a href="services/email.html">Correo empresarial</a>
+        <a href="services/security.html">Seguridad</a>
+        <a href="services/automation.html">Automatización</a>
+      </div>
+      <div class="footer-col">
+        <h5>Empresa</h5>
+        <a href="about.html">Nosotros</a>
+        <a href="product.html">Producto</a>
+        <a href="testimonials.html">Testimonios</a>
+        <a href="contact.html">Contacto</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contacto</h5>
+        <a href="tel:+528112345678">+52 81 1234 5678</a>
+        <a href="mailto:hola@evor.com">hola@evor.com</a>
+        <a>Monterrey, NL · México</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 EVOR. Todos los derechos reservados.</span>
+      <div class="footer-legal">
+        <a href="#">Privacidad</a>
+        <a href="#">Términos</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  /* Card glow on hover */
+  document.querySelectorAll('.testi-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+    });
+  });
+</script>
+<style>
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(36px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</body>
+</html>
